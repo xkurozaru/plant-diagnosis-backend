@@ -17,8 +17,6 @@ COPY --from=requirements-stage /tmp/requirements.txt /app/requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
-COPY ./src /app/src
-COPY ./ssl /app/ssl
+COPY .env ./ssl ./src /app/
 
 CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--ssl-keyfile", "./ssl/key.pem", "--ssl-certfile", "./ssl/cert.pem"]
-# CMD ["gunicorn", "-w" "4" "-k" "uvicorn.workers.UvicornWorker" "src.main:app", "--bind", "0.0.0.0:8000", "--ssl-keyfile", "./ssl/key.pem", "--ssl-certfile", "./ssl/cert.pem"]
