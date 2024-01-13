@@ -2,4 +2,4 @@
 .env
 *.pem
 *.pth
-__pycache__/
+*.pyc

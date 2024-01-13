@@ -46,6 +46,29 @@ def create_prediction_model(
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
 
+@router.delete("/api/prediction-models/{id}")
+def delete_prediction_model(
+    id: str,
+    user_id=Depends(authorize),
+    prediction_application_service: PredictionApplicationService = Depends(get_prediction_application_service),
+):
+    try:
+        prediction_application_service.delete_prediction_model(user_id, id)
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+
+@router.get("/api/prediction-results", response_model=list[prediction_schema.PredictionResultModel])
+def get_prediction_results(
+    user_id=Depends(authorize),
+    prediction_application_service: PredictionApplicationService = Depends(get_prediction_application_service),
+):
+    try:
+        return prediction_application_service.get_prediction_results(user_id)
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+
 @router.post("/api/prediction-models/{id}")
 def predict(
     id: str,

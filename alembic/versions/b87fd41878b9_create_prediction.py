@@ -36,7 +36,8 @@ def upgrade() -> None:
         sa.Column("created_at", sa.DateTime, nullable=False, default=sa.func.now()),
         sa.Column("updated_at", sa.DateTime, nullable=False, default=sa.func.now(), onupdate=sa.func.now()),
         sa.Column("result", sa.String(length=255), nullable=False),
-        sa.Column("prediction_model_id", sa.String(length=21), nullable=False),
+        sa.Column("predict_at", sa.DateTime, nullable=False),
+        sa.Column("prediction_model_name", sa.String(length=255), nullable=False),
         sa.Column("user_id", sa.String(length=21), index=True, unique=False),
     )
 

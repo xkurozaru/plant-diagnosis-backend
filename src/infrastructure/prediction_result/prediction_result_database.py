@@ -1,3 +1,5 @@
+from typing import Optional
+
 from sqlalchemy.orm import Session
 
 from src.domain.prediction_result import prediction_result, prediction_result_repository
@@ -17,11 +19,16 @@ class PredictionResultDatabase(prediction_result_repository.PredictionResultRepo
             self.session.rollback()
             raise e
 
-    def delete(self, result: prediction_result.PredictionResult) -> None:
+    def fetch_by_user_id(self, user_id: str, limit=10) -> Optional[list[prediction_result.PredictionResult]]:
         try:
-            result_e = prediction_result_entity.new_prediction_result_entity(result)
-            self.session.delete(result_e)
-            self.session.commit()
+            result_es = (
+                self.session.query(prediction_result_entity.PredictionResultEntity)
+                .filter(prediction_result_entity.PredictionResultEntity.user_id == user_id)
+                .order_by(prediction_result_entity.PredictionResultEntity.predict_at.desc())
+                .limit(limit)
+                .all()
+            )
+            return [result_e.to_model() for result_e in result_es]
         except Exception as e:
             self.session.rollback()
             raise e

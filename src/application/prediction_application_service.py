@@ -21,14 +21,14 @@ class PredictionApplicationService:
         self.__prediction_result_repository: PredictionResultRepository = prediction_result_repository
         self.__prediction_service: PredictionService = prediction_service
 
-    def get_prediction_models(self, user_id) -> list[PredictionModel]:
+    def get_prediction_models(self, user_id: str) -> list[PredictionModel]:
         user = self.__user_repository.find_by_id(user_id)
         if user is None:
             raise Exception("User not found")
 
         return self.__prediction_model_repository.fetch_all()
 
-    def create_prediction_model(self, user_id, name: str, type: str, symptoms: list[str], path: str) -> None:
+    def create_prediction_model(self, user_id: str, name: str, type: str, symptoms: list[str], path: str) -> None:
         user = self.__user_repository.find_by_id(user_id)
         if user is None:
             raise Exception("User not found")
@@ -36,7 +36,22 @@ class PredictionApplicationService:
         prediction_model = new_prediction_model(name, type, symptoms, path)
         self.__prediction_model_repository.insert(prediction_model)
 
-    def predict(self, user_id, model_id: str, image: Image) -> PredictionResult:
+    def delete_prediction_model(self, user_id: str, model_id: str) -> None:
+        user = self.__user_repository.find_by_id(user_id)
+        if user is None:
+            raise Exception("User not found")
+
+        prediction_model = self.__prediction_model_repository.find_by_id(model_id)
+        self.__prediction_model_repository.delete(prediction_model)
+
+    def get_prediction_results(self, user_id: str) -> list[PredictionResult]:
+        user = self.__user_repository.find_by_id(user_id)
+        if user is None:
+            raise Exception("User not found")
+
+        return self.__prediction_result_repository.fetch_by_user_id(user_id)
+
+    def predict(self, user_id: str, model_id: str, image: Image) -> PredictionResult:
         user = self.__user_repository.find_by_id(user_id)
         if user is None:
             raise Exception("User not found")
@@ -49,11 +64,3 @@ class PredictionApplicationService:
         self.__prediction_result_repository.insert(prediction_result)
 
         return prediction_result
-
-    def delete_prediction_model(self, user_id, id: str) -> None:
-        user = self.__user_repository.find_by_id(user_id)
-        if user is None:
-            raise Exception("User not found")
-
-        prediction_model = self.__prediction_model_repository.find_by_id(id)
-        self.__prediction_model_repository.delete(prediction_model)

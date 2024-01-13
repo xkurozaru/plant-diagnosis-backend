@@ -26,7 +26,7 @@ class PredictionService:
 
         del cnn, image_tensor, output, pred
 
-        return new_prediction_result(result, model.id, user.id)
+        return new_prediction_result(result, model.name, user.id)
 
     def image_transform(self, image: Image) -> Tensor:
         transforms = v2.Compose(
