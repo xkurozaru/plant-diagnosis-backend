@@ -19,3 +19,10 @@ class AccountApplicationService:
             raise Exception("Invalid password")
 
         return user
+
+    def get_user(self, user_id: str) -> User:
+        user = self.__user_repository.find_by_id(user_id)
+        if user is None:
+            raise Exception("User not found")
+
+        return user

@@ -6,7 +6,7 @@ from src.application.account_application_service import AccountApplicationServic
 from src.infrastructure.database import get_db
 from src.infrastructure.user.user_database import UserDatabase
 from src.interface.common import common_schema
-from src.interface.common.authorization import generate_token
+from src.interface.common.authorization import authorize, generate_token
 from src.interface.user import account_schema
 
 router = APIRouter()
@@ -40,3 +40,14 @@ def sign_in(
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
     return common_schema.to_token_model(token)
+
+
+@router.get("/api/users/me")
+def get_user(
+    user_id: str = Depends(authorize),
+    account_application_service: AccountApplicationService = Depends(get_account_application_service),
+) -> account_schema.UserModel:
+    try:
+        return account_application_service.get_user(user_id)
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
