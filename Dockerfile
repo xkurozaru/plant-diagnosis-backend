@@ -21,5 +21,4 @@ COPY .env /app/.env
 COPY ./src /app/src
 COPY ./ssl /app/ssl
 
-#CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--ssl-keyfile", "./ssl/key.pem", "--ssl-certfile", "./ssl/cert.pem"]
-CMD ["gunicorn", "--workers", "4", "src.main:app", "--bind", "0.0.0.0:8000", "--keyfile", "./ssl/key.pem", "--certfile", "./ssl/cert.pem"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--ssl-keyfile", "./ssl/key.pem", "--ssl-certfile", "./ssl/cert.pem"]

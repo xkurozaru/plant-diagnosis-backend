@@ -19,7 +19,6 @@ psycopg2-binary = "^2.9.9"
 torch = {version = "^2.1.2+cpu", source = "pytorch"}
 torchvision = {version = "^0.16.2+cpu", source = "pytorch"}
 python-multipart = "^0.0.6"
-gunicorn = "^21.2.0"
 
 
 [[tool.poetry.source]]
