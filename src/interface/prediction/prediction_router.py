@@ -29,9 +29,10 @@ def get_prediction_models(
     prediction_application_service: PredictionApplicationService = Depends(get_prediction_application_service),
 ):
     try:
-        return prediction_application_service.get_prediction_models(user_id)
+        model = prediction_application_service.get_prediction_models(user_id)
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+    return prediction_schema.to_prediction_models_model(model)
 
 
 @router.post("/api/prediction-models")
@@ -64,9 +65,10 @@ def get_prediction_results(
     prediction_application_service: PredictionApplicationService = Depends(get_prediction_application_service),
 ):
     try:
-        return prediction_application_service.get_prediction_results(user_id)
+        results = prediction_application_service.get_prediction_results(user_id)
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+    return prediction_schema.to_prediction_results_model(results)
 
 
 @router.post("/api/prediction-models/{id}")
@@ -78,12 +80,9 @@ def predict(
 ):
     try:
         image = Image.open(image_file.file)
-        prediction_application_service.predict(
-            user_id,
-            id,
-            image,
-        )
+        result = prediction_application_service.predict(user_id, id, image)
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
     finally:
         image_file.file.close()
+    return prediction_schema.to_prediction_result_model(result)

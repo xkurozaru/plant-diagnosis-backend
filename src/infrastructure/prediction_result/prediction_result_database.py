@@ -19,7 +19,7 @@ class PredictionResultDatabase(prediction_result_repository.PredictionResultRepo
             self.session.rollback()
             raise e
 
-    def fetch_by_user_id(self, user_id: str, limit=10) -> Optional[list[prediction_result.PredictionResult]]:
+    def fetch_by_user_id(self, user_id: str, limit=5) -> Optional[list[prediction_result.PredictionResult]]:
         try:
             result_es = (
                 self.session.query(prediction_result_entity.PredictionResultEntity)

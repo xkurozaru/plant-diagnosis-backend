@@ -6,9 +6,11 @@ class AccountApplicationService:
     def __init__(self, user_repository: UserRepository) -> None:
         self.__user_repository: UserRepository = user_repository
 
-    def sign_up(self, username: str, password: str) -> None:
+    def sign_up(self, username: str, password: str) -> User:
         user = new_member_user(username, password)
         self.__user_repository.insert(user)
+
+        return user
 
     def sign_in(self, username: str, password: str) -> User:
         user = self.__user_repository.find_by_username(username)

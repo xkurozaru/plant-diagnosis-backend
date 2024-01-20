@@ -4,6 +4,11 @@ from src.config import ITER, SALT
 from src.domain.common import nano_id
 from src.domain.user import role
 
+MIN_USERNAME_LENGTH = 2
+MAX_USERNAME_LENGTH = 32
+MIN_PASSWORD_LENGTH = 8
+MAX_PASSWORD_LENGTH = 72
+
 
 class User:
     __id: str
@@ -42,10 +47,22 @@ def hash(password: str) -> str:
 
 
 def new_member_user(username: str, password: str) -> User:
+    if len(username) < MIN_USERNAME_LENGTH or len(username) > MAX_USERNAME_LENGTH:
+        raise Exception(f"Username must be between {MIN_USERNAME_LENGTH} and {MAX_USERNAME_LENGTH} characters")
+
+    if len(password) < MIN_PASSWORD_LENGTH or len(password) > MAX_PASSWORD_LENGTH:
+        raise Exception(f"Password must be between {MIN_PASSWORD_LENGTH} and {MAX_PASSWORD_LENGTH} characters")
+
     return User(nano_id.generate(), username, hash(password), role.new_member_role())
 
 
 def new_admin_user(username: str, password: str) -> User:
+    if len(username) < MIN_USERNAME_LENGTH or len(username) > MAX_USERNAME_LENGTH:
+        raise Exception(f"Username must be between {MIN_USERNAME_LENGTH} and {MAX_USERNAME_LENGTH} characters")
+
+    if len(password) < MIN_PASSWORD_LENGTH or len(password) > MAX_PASSWORD_LENGTH:
+        raise Exception(f"Password must be between {MIN_PASSWORD_LENGTH} and {MAX_PASSWORD_LENGTH} characters")
+
     return User(nano_id.generate(), username, hash(password), role.new_admin_role())
 
 

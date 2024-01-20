@@ -49,7 +49,7 @@ class PredictionApplicationService:
         if user is None:
             raise Exception("User not found")
 
-        return self.__prediction_result_repository.fetch_by_user_id(user_id)
+        return self.__prediction_result_repository.fetch_by_user_id(user_id, 5)
 
     def predict(self, user_id: str, model_id: str, image: Image) -> PredictionResult:
         user = self.__user_repository.find_by_id(user_id)
