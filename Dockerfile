@@ -22,3 +22,5 @@ COPY ./src /app/src
 COPY ./ssl /app/ssl
 
 CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--ssl-keyfile", "./ssl/key.pem", "--ssl-certfile", "./ssl/cert.pem"]
+
+EXPOSE 8000
