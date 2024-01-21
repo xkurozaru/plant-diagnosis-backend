@@ -19,7 +19,8 @@ RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
 COPY .env /app/.env
 COPY ./src /app/src
+COPY ./ssl /app/ssl
 
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--ssl-keyfile", "./ssl/key.pem", "--ssl-certfile", "./ssl/cert.pem"]
 
 EXPOSE 8000
