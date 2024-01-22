@@ -1,10 +1,10 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
-from pytz import timezone
+JST = timezone(timedelta(hours=+9), "JST")
 
 
 def date_time_now() -> datetime:
-    return datetime.now(timezone("Asia/Tokyo"))
+    return datetime.now(JST)
 
 
 def add_days_to_date_time(date_time: datetime, days: int) -> datetime:
