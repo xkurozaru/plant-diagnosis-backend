@@ -8,7 +8,6 @@ Create Date: 2024-01-12 15:33:03.109282
 from typing import Sequence, Union
 
 import sqlalchemy as sa
-
 from alembic import op
 
 # revision identifiers, used by Alembic.
@@ -26,7 +25,7 @@ def upgrade() -> None:
         sa.Column("updated_at", sa.DateTime, nullable=False, default=sa.func.now(), onupdate=sa.func.now()),
         sa.Column("name", sa.String(length=255), unique=True, nullable=False),
         sa.Column("model_type", sa.String(length=255), nullable=False),
-        sa.Column("symptoms", sa.Text, nullable=False),
+        sa.Column("symptoms", sa.ARRAY(sa.Text), nullable=False),
         sa.Column("path", sa.Text, nullable=False),
     )
 
@@ -38,7 +37,7 @@ def upgrade() -> None:
         sa.Column("result", sa.String(length=255), nullable=False),
         sa.Column("predict_at", sa.DateTime, nullable=False),
         sa.Column("prediction_model_name", sa.String(length=255), nullable=False),
-        sa.Column("user_id", sa.String(length=21), index=True, unique=False),
+        sa.Column("user_id", sa.String(length=21), index=True, nullable=False),
     )
 
 

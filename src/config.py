@@ -10,7 +10,7 @@ HOST = os.getenv("DATABASE_HOST")
 USER = os.getenv("DATABASE_USERNAME")
 PASSWD = os.getenv("DATABASE_PASSWORD")
 DB = os.getenv("DATABASE")
-DB_URL = f"mysql://{USER}:{PASSWD}@{HOST}/{DB}"
+DB_URL = f"postgresql://{USER}:{PASSWD}@{HOST}/{DB}"
 
 SALT = os.environ.get("HASH_SALT")
 ITER = os.environ.get("HASH_ITER_NUM")

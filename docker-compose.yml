@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    command: >
+      /bin/sh -c 'alembic upgrade head && uvicorn src.main:app --host 0.0.0.0 --port 8000 --ssl-keyfile ./ssl/key.pem --ssl-certfile ./ssl/cert.pem'
+    tty: true
+
+  db:
+    image: postgres:16.1-alpine
+    environment:
+      POSTGRES_DB: ${DATABASE}
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./_var:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${DATABASE_USERNAME} -d ${DATABASE}"
+        ]
+      interval: 5s
+      retries: 3

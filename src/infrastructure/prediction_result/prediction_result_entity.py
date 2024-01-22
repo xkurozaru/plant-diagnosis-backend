@@ -2,7 +2,6 @@ from datetime import datetime
 
 from sqlalchemy import DateTime, String
 from sqlalchemy.orm import Mapped, mapped_column
-
 from src.domain.prediction_result import prediction_result
 from src.infrastructure.common.base_model import BaseModel
 
