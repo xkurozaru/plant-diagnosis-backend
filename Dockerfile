@@ -19,6 +19,5 @@ RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
 COPY ./.env /app/.env
 COPY ./src /app/src
-COPY ./ssl /app/ssl
 COPY ./alembic.ini /app/alembic.ini
 COPY ./alembic /app/alembic
