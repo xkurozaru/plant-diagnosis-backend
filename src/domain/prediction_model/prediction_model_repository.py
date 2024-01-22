@@ -18,5 +18,5 @@ class PredictionModelRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def delete(self, prediction_model: prediction_model.PredictionModel) -> None:
+    def delete(self, id: str) -> None:
         raise NotImplementedError

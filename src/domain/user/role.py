@@ -20,16 +20,24 @@ class Role:
     def permissions(self) -> list[permission.Permission]:
         return self.__permissions
 
+    def has_permission(self, permission: permission.Permission) -> bool:
+        return permission in self.__permissions
+
 
 def new_admin_role() -> "Role":
     return Role(
         role_type.RoleType.ADMIN,
-        [permission.Permission.READ_MODEL, permission.Permission.WRITE_MODEL, permission.Permission.DELETE_MODEL],
+        [
+            permission.Permission.READ_MODEL,
+            permission.Permission.WRITE_MODEL,
+            permission.Permission.DELETE_MODEL,
+            permission.Permission.PREDICT,
+        ],
     )
 
 
 def new_member_role() -> "Role":
-    return Role(role_type.RoleType.MEMBER, [permission.Permission.READ_MODEL])
+    return Role(role_type.RoleType.MEMBER, [permission.Permission.READ_MODEL, permission.Permission.PREDICT])
 
 
 def recreate_role(type: str) -> "Role":

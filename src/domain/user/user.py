@@ -2,7 +2,7 @@ import hashlib
 
 from src.config import ITER, SALT
 from src.domain.common import nano_id
-from src.domain.user import role
+from src.domain.user import permission, role
 
 MIN_USERNAME_LENGTH = 2
 MAX_USERNAME_LENGTH = 32
@@ -40,6 +40,9 @@ class User:
 
     def is_valid_password(self, password: str) -> bool:
         return self.__hash_password == hash(password)
+
+    def has_permission(self, permission: permission.Permission) -> bool:
+        return self.__role.has_permission(permission)
 
 
 def hash(password: str) -> str:

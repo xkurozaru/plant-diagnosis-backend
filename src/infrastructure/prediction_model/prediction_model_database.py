@@ -1,7 +1,6 @@
 from typing import Optional
 
 from sqlalchemy.orm.session import Session
-
 from src.domain.prediction_model import prediction_model, prediction_model_repository
 from src.infrastructure.prediction_model import prediction_model_entity
 
@@ -33,9 +32,9 @@ class PredictionModelDatabase(prediction_model_repository.PredictionModelReposit
         except Exception as e:
             raise e
 
-    def delete(self, model: prediction_model.PredictionModel) -> None:
+    def delete(self, id: str) -> None:
         try:
-            model_e = prediction_model_entity.new_prediction_model_entity(model)
+            model_e = self.__session.query(prediction_model_entity.PredictionModelEntity).filter_by(id=id).first()
             self.__session.delete(model_e)
             self.__session.commit()
         except Exception as e:
