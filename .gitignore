@@ -1,6 +1,6 @@
-.venv
+.venv/
+_var/
+ssl/
 .env
-*.pem
 *.pth
 *.pyc
-_var
