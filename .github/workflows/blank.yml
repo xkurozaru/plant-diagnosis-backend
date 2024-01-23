@@ -34,4 +34,4 @@ jobs:
             cd ${{ secrets.SERVER_DEPLOY_DIR }}
             git pull origin dev
             sudo docker compose stop
-            make up
+            sudo docker compose up --build -d
