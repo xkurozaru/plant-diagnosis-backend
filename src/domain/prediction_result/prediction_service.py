@@ -1,10 +1,11 @@
 import torch
 from PIL import Image
+from torch import Tensor
+from torchvision.transforms import v2
+
 from src.domain.prediction_model.prediction_model import PredictionModel
 from src.domain.prediction_result.prediction_result import PredictionResult, new_prediction_result
 from src.domain.user.user import User
-from torch import Tensor
-from torchvision.transforms import v2
 
 
 class PredictionService:
@@ -30,6 +31,7 @@ class PredictionService:
     def image_transform(self, image: Image) -> Tensor:
         transforms = v2.Compose(
             [
+                v2.ToImage(),
                 v2.Resize((224, 224)),
                 v2.ToDtype(torch.float32, scale=True),
                 v2.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
