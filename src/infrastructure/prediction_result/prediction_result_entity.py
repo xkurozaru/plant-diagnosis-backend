@@ -2,6 +2,7 @@ from datetime import datetime
 
 from sqlalchemy import DateTime, String
 from sqlalchemy.orm import Mapped, mapped_column
+
 from src.domain.prediction_result import prediction_result
 from src.infrastructure.common.base_model import BaseModel
 
@@ -10,7 +11,7 @@ class PredictionResultEntity(BaseModel):
     __tablename__ = "prediction_result_entities"
 
     result: Mapped[str] = mapped_column(String(255), nullable=False)
-    predict_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    predict_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     prediction_model_name: Mapped[str] = mapped_column(String(255), nullable=False)
     user_id: Mapped[str] = mapped_column(String(21), index=True, nullable=False)
 
