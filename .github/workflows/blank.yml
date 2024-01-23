@@ -29,9 +29,4 @@ jobs:
           echo "${{ secrets.PRIVATE_KEY }}" > private_key
           chmod 600 private_key
           ssh -oStrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ secrets.HOST_NAME }} -i private_key "cd ~/plant-diagnosis-backend && git fetch https://github.com/xkurozaru/plant-diagnosis-backend.git && git pull https://github.com/xkurozaru/plant-diagnosis-backend.git"
-
-      # Build
-      - name: Build
-        run: |
-          docker compose down
-          docker compose up --build
+          ssh -oStrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ secrets.HOST_NAME }} -i private_key "cd ~/plant-diagnosis-backend && sudo docker compose down && sudo docker compose up --build"
