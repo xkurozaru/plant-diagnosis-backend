@@ -33,5 +33,5 @@ jobs:
           script: |
             cd ${{ secrets.SERVER_DEPLOY_DIR }}
             git pull origin dev
-            docker-compose stop
-            docker-compose up --build
+            docker compose stop
+            docker compose up --build
