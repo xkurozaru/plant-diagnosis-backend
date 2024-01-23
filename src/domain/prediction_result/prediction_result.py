@@ -54,7 +54,7 @@ def recreate_prediction_result(
     return PredictionResult(
         id,
         result,
-        predict_at,
+        predict_at.astimezone(date_time.JST),
         prediction_model_name,
         user_id,
     )
