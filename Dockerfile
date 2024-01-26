@@ -9,7 +9,7 @@ COPY ./pyproject.toml ./poetry.lock* /tmp/
 RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
 
 
-FROM python:3.10-slim
+FROM python:3.10-slim as production-stage
 
 WORKDIR /app
 
