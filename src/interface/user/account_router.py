@@ -33,6 +33,19 @@ def sign_up(
     return common_schema.to_token_model(token)
 
 
+@router.post("/api/sign-up/admin")
+def sign_up_admin(
+    data: account_schema.SignUpModel,
+    account_application_service: AccountApplicationService = Depends(get_account_application_service),
+):
+    try:
+        user = account_application_service.sign_up_admin(data.username, data.password)
+        token = generate_token(user.id)
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+    return common_schema.to_token_model(token)
+
+
 @router.post("/api/sign-in")
 def sign_in(
     data: Annotated[OAuth2PasswordRequestForm, Depends()],

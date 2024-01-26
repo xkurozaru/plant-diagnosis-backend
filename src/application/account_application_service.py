@@ -1,4 +1,4 @@
-from src.domain.user.user import User, new_member_user
+from src.domain.user.user import User, new_admin_user, new_member_user
 from src.domain.user.user_repository import UserRepository
 
 
@@ -8,6 +8,12 @@ class AccountApplicationService:
 
     def sign_up(self, username: str, password: str) -> User:
         user = new_member_user(username, password)
+        self.__user_repository.insert(user)
+
+        return user
+
+    def sign_up_admin(self, username: str, password: str) -> User:
+        user = new_admin_user(username, password)
         self.__user_repository.insert(user)
 
         return user
